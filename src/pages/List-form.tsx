@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
+import ListItem from './ListItem';
+
 const List = () => {
   const [formData, setFormData] = useState({
     text: '',
@@ -11,6 +13,7 @@ const List = () => {
       return { ...prevState, text: value };
     });
   };
+
   const sendListItem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -26,16 +29,22 @@ const List = () => {
     } catch (error) {
       console.log(error);
     }
+
+    setFormData({ text: '' });
   };
+
   return (
     <>
-      <div>
-        <h1 className="text-xl">買い物リスト</h1>
+      <div className="flex justify-center items-center py-4">
         <div>
+          <h1 className="text-3xl font-serif flex justify-center py-3 px-4">
+            買い物リスト
+          </h1>
           <form onSubmit={sendListItem}>
             <div>
               <label htmlFor="item"></label>
               <input
+                className="w-96 rounded py-3 px-4"
                 type="text"
                 name="list"
                 id="list"
@@ -44,10 +53,19 @@ const List = () => {
                 placeholder="入力してください。"
               />
             </div>
-            <button type="submit">送信</button>
+            <div className="flex justify-end py-2">
+              <button
+                className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2"
+                type="submit"
+              >
+                送信
+              </button>
+            </div>
           </form>
         </div>
       </div>
+
+      <ListItem />
     </>
   );
 };

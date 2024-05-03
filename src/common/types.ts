@@ -5,6 +5,10 @@ export interface Easy {
   hello: string;
 }
 
+export interface checkbox {
+  checked: boolean;
+}
+
 export interface HeaderInterface {
   linkPair: Array<{ label: string; url: string }>;
 }

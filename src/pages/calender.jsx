@@ -1,6 +1,7 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 const localizer = momentLocalizer(moment);
 
@@ -13,6 +14,9 @@ const event = [
 ];
 
 const MyCalender = () => {
+  useEffect(() => {
+    console.log(new Date());
+  }, []);
   return (
     <>
       <div className="h-[56rem]">

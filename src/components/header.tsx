@@ -9,9 +9,10 @@ const Header = () => {
   const links: HeaderInterface = {
     linkPair: [
       { label: 'HOME', url: '/' },
-      { label: 'Schedule', url: '/calender' },
-      { label: 'List', url: '/list' },
-      { label: 'Logout', url: '/logout' },
+      { label: 'Schedule', url: '/Calender' },
+      { label: 'List', url: '/List-form' },
+      // { label: 'About', url: '/about' },
+      // { label: 'Logout', url: '/logout' },
     ],
   };
   return (
