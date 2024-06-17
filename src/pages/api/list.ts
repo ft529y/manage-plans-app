@@ -7,8 +7,6 @@ export interface ListData {
   listName: { formData: { text: string } };
 }
 
-let tempListData: ListData[] = [];
-
 // From now on, it will be retrieved from the DB.
 let dummyData: ListData[] = [
   {
@@ -35,11 +33,12 @@ const List = (req: NextApiRequest, res: NextApiResponse) => {
 
   if (method === 'GET') {
     res.status(200).json(dummyData);
+    // console.log(req.query);
   }
 
   if (method === 'POST') {
     const { body } = req;
-    const text: string = body.formData.text;
+    const text: string = body?.formData?.text;
     const uuid: string = uuid4();
     res.status(200).json({
       message: `POST request received with data!!!: ${JSON.stringify(body)}`,
@@ -48,7 +47,14 @@ const List = (req: NextApiRequest, res: NextApiResponse) => {
       id: uuid,
       listName: { formData: { text } },
     };
-    tempListData.push(listData);
+    dummyData.push(listData);
+  }
+
+  if (method === 'PUT') {
+    const dummy = dummyData.find((item) => {
+      item.id === req.query.id;
+    });
+    // console.log(dummy?.id);
   }
 
   if (method === 'DELETE') {
