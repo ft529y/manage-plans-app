@@ -16,6 +16,8 @@ const ListItem: React.FC<ListItemProps> = (
   );
 
   useEffect(() => {
+    // const apiUrl = process.env.NEXT_PUBLIC_SECRET_KEY;
+    // console.log(apiUrl);
     const fetchData = async () => {
       try {
         const response = await fetch('/api/list');

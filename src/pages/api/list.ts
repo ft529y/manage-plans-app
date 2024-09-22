@@ -1,5 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
+import closeDB from '../utils/closeDB';
+import connectDB from '../utils/connectDB';
+import { ListModel } from '../utils/shemaModels';
+
 const { v4: uuid4 } = require('uuid');
 
 export interface ListData {
@@ -23,7 +27,9 @@ let dummyData: ListData[] = [
   },
 ];
 
-const List = (req: NextApiRequest, res: NextApiResponse) => {
+const ListAPI = async (req: NextApiRequest, res: NextApiResponse) => {
+  // await connectDB();
+  // await closeDB();
   let listData: ListData = {
     id: '',
     listName: { formData: { text: '' } },
@@ -31,23 +37,50 @@ const List = (req: NextApiRequest, res: NextApiResponse) => {
 
   const { method } = req;
 
+  // if (method === 'GET') {
+  //   const allListData = await ListModel.find();
+  //   res.status(200).json(allListData);
+  // }
+
   if (method === 'GET') {
-    res.status(200).json(dummyData);
-    // console.log(req.query);
+    return res.status(200).json(dummyData);
   }
 
   if (method === 'POST') {
-    const { body } = req;
-    const text: string = body?.formData?.text;
-    const uuid: string = uuid4();
-    res.status(200).json({
-      message: `POST request received with data!!!: ${JSON.stringify(body)}`,
-    });
-    listData = {
-      id: uuid,
-      listName: { formData: { text } },
-    };
-    dummyData.push(listData);
+    try {
+      const { body } = req;
+      const text: string = body?.formData?.text;
+      const uuid: string = uuid4();
+
+      listData = {
+        id: uuid,
+        listName: { formData: { text } },
+      };
+
+      await ListModel.create(listData);
+      res.status(200).json({
+        message: `POST request received with data成功!!!: ${JSON.stringify(
+          body
+        )}`,
+        created: true,
+      });
+    } catch (err) {
+      return res.status(400).json({
+        message: `POST failed!!!: ${err}}`,
+      });
+    }
+
+    // const { body } = req;
+    // const text: string = body?.formData?.text;
+    // const uuid: string = uuid4();
+    // res.status(200).json({
+    //   message: `POST request received with data!!!: ${JSON.stringify(body)}`,
+    // });
+    // listData = {
+    //   id: uuid,
+    //   listName: { formData: { text } },
+    // };
+    // dummyData.push(listData);
   }
 
   if (method === 'PUT') {
@@ -61,4 +94,4 @@ const List = (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default List;
+export default ListAPI;
