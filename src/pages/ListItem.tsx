@@ -3,13 +3,21 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { checkbox } from '../common/types';
 import { ListData } from './api/list';
 
-const ListItem = (/*removeStuff: () => void*/) => {
+interface ListItemProps {
+  fetchExe: boolean;
+}
+
+const ListItem: React.FC<ListItemProps> = (
+  { fetchExe } /*removeStuff: () => void*/
+) => {
   const [listData, setListData] = useState<ListData[] | null>(null);
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
     {}
   );
 
   useEffect(() => {
+    // const apiUrl = process.env.NEXT_PUBLIC_SECRET_KEY;
+    // console.log(apiUrl);
     const fetchData = async () => {
       try {
         const response = await fetch('/api/list');
@@ -24,12 +32,13 @@ const ListItem = (/*removeStuff: () => void*/) => {
         console.error('エラーログを取得しました。', error);
       }
     };
+
     fetchData();
 
     return () => {
       console.log('画面がアンマウントされました。');
     };
-  }, []);
+  }, [fetchExe]);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -81,7 +90,16 @@ const ListItem = (/*removeStuff: () => void*/) => {
             <p>買い物リストのデータが存在しません。</p>
           )}
         </div>
+        <button className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2">
+          保存
+        </button>
       </div>
+
+      {/* <div className="flex justify-center items-center py-8">
+        <button className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2">
+          保存
+        </button>
+      </div> */}
     </>
   );
 };

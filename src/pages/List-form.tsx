@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import ListItem from './ListItem';
 
 const List = () => {
+  const [fetchExe, setFetchExe] = useState(false);
   const [formData, setFormData] = useState({
     text: '',
   });
@@ -25,6 +26,7 @@ const List = () => {
         body: JSON.stringify({ formData }),
       });
       const data = await response.json();
+      setFetchExe((prev) => !prev);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -65,7 +67,7 @@ const List = () => {
         </div>
       </div>
 
-      <ListItem />
+      <ListItem fetchExe={fetchExe} />
     </>
   );
 };

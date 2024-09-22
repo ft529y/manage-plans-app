@@ -1,7 +1,7 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const localizer = momentLocalizer(moment);
 
@@ -14,6 +14,15 @@ const event = [
 ];
 
 const MyCalender = () => {
+  const [events, setEvents] = useState([]);
+
+  const handleSelect = ({ start, end }) => {
+    const title = window.prompt('New Event name');
+    if (title) {
+      setEvents([...events, { start, end, title }]);
+    }
+  };
+
   useEffect(() => {
     console.log(new Date());
   }, []);
@@ -21,10 +30,12 @@ const MyCalender = () => {
     <>
       <div className="h-[56rem]">
         <Calendar
+          selectable
           localizer={localizer}
-          events={event}
+          events={events}
           startAccessor="start"
           endAccessor="end"
+          onSelectSlot={handleSelect}
         />
       </div>
 

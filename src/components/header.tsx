@@ -8,10 +8,10 @@ import iconPic from '../../public/s.png';
 const Header = () => {
   const links: HeaderInterface = {
     linkPair: [
-      { label: 'HOME', url: '/' },
+      { label: 'About', url: '/' },
       { label: 'Schedule', url: '/Calender' },
       { label: 'List', url: '/List-form' },
-      // { label: 'About', url: '/about' },
+      { label: 'memo', url: '/memo' },
       // { label: 'Logout', url: '/logout' },
     ],
   };
