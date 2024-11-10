@@ -1,6 +1,6 @@
 import { FormEvent, memo, useEffect, useState } from 'react';
 
-import { MemoData } from './api/memo/memo';
+import { MemoData } from './api/1/memo';
 
 const Memo = () => {
   const [sentence, setSentence] = useState('');
@@ -9,7 +9,7 @@ const Memo = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/memo/memo');
+        const response = await fetch('/api/1/memo');
 
         if (!response.ok) {
           throw new Error('response.ok以外のログが出力されました');
@@ -23,7 +23,7 @@ const Memo = () => {
     };
 
     fetchData();
-  });
+  }, []);
 
   const autoTxtArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = 'auto';
@@ -34,7 +34,7 @@ const Memo = () => {
   const sendMemo = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/???', {
+      const response = await fetch('/api/1/memo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
