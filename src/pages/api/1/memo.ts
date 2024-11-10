@@ -22,7 +22,7 @@ let dummyMemo: MemoData[] = [
 ];
 const { v4: uuid4 } = require('uuid');
 
-const Memo = (req: NextApiRequest, res: NextApiResponse) => {
+const MemoAPI = (req: NextApiRequest, res: NextApiResponse) => {
   let memoData: MemoData = {
     id: '',
     memoContent: { formData: { memo: '' } },
@@ -32,6 +32,17 @@ const Memo = (req: NextApiRequest, res: NextApiResponse) => {
   if (method === 'GET') {
     res.status(200).json(dummyMemo);
   }
+  if (method === 'POST') {
+    const { sentence } = req.body;
+    // const memoTxt: string = body?.sentence;
+    const uuid: string = uuid4();
+
+    res.status(200).json({
+      message: `memoリクエストに成功しました。`,
+      data: sentence,
+      uuid: uuid,
+    });
+  }
 };
 
-export default Memo;
+export default MemoAPI;
