@@ -1,6 +1,6 @@
 import { FormEvent, memo, useEffect, useState } from 'react';
 
-import { MemoData } from './api/1/memo';
+import { MemoData } from '@/common/types';
 
 const Memo = () => {
   const [sentence, setSentence] = useState('');
@@ -41,6 +41,16 @@ const Memo = () => {
         },
         body: JSON.stringify({ sentence }),
       });
+      const res = await response.json();
+      if (memoData !== null) {
+        setMemoData([
+          ...memoData,
+          {
+            id: res.uuid,
+            memoContent: { formData: { memo: res.data } },
+          },
+        ]);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -69,11 +79,29 @@ const Memo = () => {
           </div>
         </form>
       </div>
-      <div>
+
+      <div className="text-center w-1/2 mx-auto">
         {memoData !== null && memoData !== undefined ? (
           memoData.map((item) => (
-            <div key={item.id}>
-              <p>{item.memoContent.formData.memo}</p>
+            <div className="py-3" key={item.id}>
+              <p className="rounded-full bg-slate-400 p-4 mb-4">
+                登録した日時 :{item.memoContent.formData.memo}
+              </p>
+
+              <div className="ml-auto px-8">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 mr-4 text-white py-2 px-4 rounded-full"
+                  // onClick={() => removeTask(index, item)}
+                >
+                  更新
+                </button>
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+                  // onClick={() => removeTask(index, item)}
+                >
+                  削除
+                </button>
+              </div>
             </div>
           ))
         ) : (
