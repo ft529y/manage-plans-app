@@ -6,7 +6,6 @@ const Settings = () => {
   const searchParams = useSearchParams();
   const params = useParams();
   const number = params?.number;
-  console.log(number);
   return (
     <>
       <h1>settings画面です。</h1>

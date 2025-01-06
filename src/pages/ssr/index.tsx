@@ -1,5 +1,3 @@
-const SSRIndex = () => {
-  console.log('アイ');
-};
+const SSRIndex = () => {};
 
 export default SSRIndex;
