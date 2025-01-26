@@ -8,11 +8,26 @@ const localizer = momentLocalizer(moment);
 const MyCalender = () => {
   const [events, setEvents] = useState([]);
 
-  const handleSelect = ({ start, end }) => {
-    // ユーザーがデータを登録するためにAPIへPOSTする。
-    const title = window.prompt('New Event name');
-    if (title) {
-      setEvents((prevEvents) => [...prevEvents, { start, end, title }]);
+  const handleSelect = async ({ start, end }) => {
+    // ユーザーがデータを登録するためにAPIへPOSTする。(その後データベースへ登録する)
+    try {
+      const title = window.prompt('New Event name');
+      if (title) {
+        const reqObj = {
+          start: start,
+          end: end,
+          title: title,
+        };
+        const res = await fetch('/api/calender/postCalender', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ reqObj }),
+        });
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -23,10 +38,10 @@ const MyCalender = () => {
         const data = await calenderResponse.json().then((item) => {
           //APIからデータを取得しフロントへ表示させる場合は↓のようにnew Date()化して上げる必要性がある。
           const trueData = {
-            id: 1,
+            id: item.id,
             start: new Date(item.start),
             end: new Date(item.end),
-            title: 'サンプルデータ挿入',
+            title: item.title,
           };
           setEvents((prevEvents) => [...prevEvents, trueData]);
         });
@@ -39,9 +54,7 @@ const MyCalender = () => {
       }
     };
 
-    fetchData().then(() => {
-      console.log(events);
-    });
+    fetchData().then(() => {});
   }, []);
 
   const handleDeleteEvent = (eventId) => {
