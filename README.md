@@ -1,40 +1,90 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# 管理アプリ(schedule app)
 
-First, run the development server:
+## status
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+現在成果物として開発中。  
+Currently being developed as a deliverable
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 開発理由 (Reason for development)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+React, Next.js にとても興味があり成果物として開発中です。  
+TypeScript, JavaScript, Angular の経験を元に React, Next.js を学びました。
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+I am very interesting development that use the React and Next.js.  
+In the base of experience develop TypeScript, JavaScript and Angular, I learned React and Next.js.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 概要, 主な機能(Summary and main function)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### ユーザのスケジュール管理アプリを開発中です。以下に主な機能をまとめます。
 
-## Learn More
+#### It's development for now and can manage the user schedule. I will summarize the main function in the below.
 
-To learn more about Next.js, take a look at the following resources:
+- カレンダー:  
+  ユーザーは予定をカレンダーに登録できます。  
+  データの作成と削除が可能。今後、mongoDB へ連携予定。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  Calender:  
+  The user can make the plan in the Calender(can make and delete) => Planed to retain in DB
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- リスト機能:  
+  ユーザーは Todo リストを作成できます。今後、mongoDB へ連携予定。  
+  input ボックスに入力を行い、送信ボタンを押下すると画面上に入力した内容が反映されます。チェックボックス機能を保持します。
 
-## Deploy on Vercel
+  List:  
+  The user can make the Todo List => Planed to retain in DB
+  If user input the something stuff and then push send button, appear the input stuff in the below. this function has checkbox.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- メモ機能:  
+  この機能はリスト機能と似ています。今後、mongoDB へ連携予定。
+  リスト機能との違いはユーザーが編集ボタンを押下すると編集ページへ遷移することです。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  Memo:  
+  It's function similar to the List function => also planned to retain in DB
+  If the user push the update button, user can get into the edit page  
+  this is the different fot the List function.
+
+- ログイン: ユーザーはトップページからアカウントとパスワードを利用してアプリへログインできます。今後、user info を mongoDB へ連携予定。NextAuth サービスを利用することによってユーザーはログイン時、csrf-token を取得し、API コール時などこれを保持している必要があります。(cookie 管理)
+
+  Logged In: The user can logged in this app. (Planned to retain DB for user info.)
+  Use the NextAuth session and can get the token from the NextAuth. User has to have the csrf-token when the logged in and API call or something.
+
+- ログアウト: ユーザーはアプリからログアウトできます。ログアウト時、保持していた token を削除します。
+
+- Logged out: The user can logged out in this app. Remove the all token when the user logged out.
+
+### 使用技術(Use technology)
+
+- TypeScript
+- React (ver18)
+- Next.js
+- NextAuth
+- tailwindcss
+- react-big-calender
+- mongo DB
+- mongoose
+
+### デモ画面(Demo)
+
+ログイン画面(Logged in)
+
+<img src="public/demo-logged-in.png" alt="ログイン画面のキャプチャ" width="300">
+
+カレンダー画面(Calender)
+
+<img src="public/demo-calender.png" alt="カレンダー画面のキャプチャ" width="300"/>
+
+リスト画面(List)
+
+<img src="public/demo-list.png" alt="リスト画面のキャプチャ" width="300"/>
+
+メモ画面(Memo)
+
+<img src="public/demo-memo.png" alt="" width="300">
+
+モーダル画面(Modal)
+
+<img src="public/demo-modal.png" alt="" width="300">
+
+※モーダル機能はアプリ全体で共通化部品。

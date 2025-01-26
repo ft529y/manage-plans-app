@@ -1,11 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { checkbox } from '../common/types';
-import { ListData } from './api/list';
-
-interface ListItemProps {
-  fetchExe: boolean;
-}
+import { checkbox, ListData, ListItemProps } from '../common/types';
 
 const ListItem: React.FC<ListItemProps> = (
   { fetchExe } /*removeStuff: () => void*/
@@ -53,7 +48,6 @@ const ListItem: React.FC<ListItemProps> = (
       newItem.splice(index, 1);
       setListData(newItem);
     }
-    console.log(item);
     // Send delete information to DB(use the item.id?).
   };
 

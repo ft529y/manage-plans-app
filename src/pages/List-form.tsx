@@ -10,7 +10,6 @@ const List = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFormData((prevState) => {
-      // console.log(formData);
       return { ...prevState, text: value };
     });
   };
@@ -27,11 +26,9 @@ const List = () => {
       });
       const data = await response.json();
       setFetchExe((prev) => !prev);
-      console.log(data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-
     setFormData({ text: '' });
   };
 

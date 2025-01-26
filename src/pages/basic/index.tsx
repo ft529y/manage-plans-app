@@ -1,14 +1,18 @@
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { title } from 'process';
+import { useEffect } from 'react';
 
 import { Easy } from '../../common/types';
 
-interface ContextType {
-  query: '';
-}
-
+// お試しページ(使用していない)
 const Index = (props: Easy) => {
-  // console.log(props);
+  const router = useRouter();
+  const currentPath = router.asPath;
+
+  useEffect(() => {
+    console.log('画面の表示に成功しました。', currentPath);
+  }, []);
   return (
     <>
       <h1>{props.hello}</h1>
@@ -21,7 +25,6 @@ const Index = (props: Easy) => {
 export default Index;
 
 export const getServerSideProps: GetServerSideProps<Easy> = async (context) => {
-  // console.log(context);
   return {
     props: {
       // context: context,

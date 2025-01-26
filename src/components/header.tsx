@@ -12,7 +12,7 @@ const Header = () => {
       { label: 'About', url: '/' },
       { label: 'Schedule', url: '/Calender' },
       { label: 'List', url: '/List-form' },
-      { label: 'memo', url: '/memo' },
+      { label: 'Memo', url: '/memo' },
     ],
   };
 
@@ -37,10 +37,10 @@ const Header = () => {
             ))}
           </div>
           <button
-            className="font-mono text-violet-50 rounded-full px-3 py-2 pr-16	font-medium hover:bg-red-600"
+            className=" font-mono text-violet-50 rounded-full px-3 py-2 mr-16 font-medium hover:bg-red-600"
             onClick={async () => logout()}
           >
-            ログアウト
+            <p>ログアウト</p>
           </button>
         </nav>
       </header>
