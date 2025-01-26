@@ -12,7 +12,7 @@ const Header = () => {
       { label: 'About', url: '/' },
       { label: 'Schedule', url: '/Calender' },
       { label: 'List', url: '/List-form' },
-      { label: 'memo', url: '/memo' },
+      { label: 'Memo', url: '/memo' },
     ],
   };
 
