@@ -1,8 +1,10 @@
+import { useRouter } from 'next/router';
 import { FormEvent, memo, useEffect, useState } from 'react';
 
 import { MemoData } from '@/common/types';
 
 const Memo = () => {
+  const router = useRouter();
   const [sentence, setSentence] = useState('');
   const [memoData, setMemoData] = useState<MemoData[] | null>(null);
 
@@ -56,6 +58,11 @@ const Memo = () => {
     }
   };
 
+  const redirectToEdit = (id: string) => {
+    const url = `edit/${id}`;
+    router.push(url);
+  };
+
   return (
     <>
       <div className="w-full justify-center flex-col items-center flex">
@@ -91,7 +98,7 @@ const Memo = () => {
               <div className="ml-auto px-8">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 mr-4 text-white py-2 px-4 rounded-full"
-                  // onClick={() => removeTask(index, item)}
+                  onClick={() => redirectToEdit(item.id)}
                 >
                   更新
                 </button>
