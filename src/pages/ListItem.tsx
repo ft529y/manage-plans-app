@@ -12,7 +12,6 @@ const ListItem: React.FC<ListItemProps> = (
 
   useEffect(() => {
     // const apiUrl = process.env.NEXT_PUBLIC_SECRET_KEY;
-    // console.log(apiUrl);
     const fetchData = async () => {
       try {
         const response = await fetch('/api/list');
@@ -36,10 +35,21 @@ const ListItem: React.FC<ListItemProps> = (
   }, [fetchExe]);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setCheckedItems({ ...checkedItems, [name]: checked });
+    if (listData !== undefined && listData !== null) {
+      const { name, checked } = event.target;
 
-    // Write a process to register the checkbox boolean value to the DB
+      const updateData = listData.map((item) => {
+        if (item.id === name) {
+          item.checked = checked;
+          return item;
+        } else {
+          return item;
+        }
+      });
+      setListData(updateData);
+
+      // Write a process to register the checkbox boolean value to the DB
+    }
   };
 
   const removeTask = (index: number, item: ListData) => {
@@ -47,8 +57,13 @@ const ListItem: React.FC<ListItemProps> = (
       const newItem = [...listData];
       newItem.splice(index, 1);
       setListData(newItem);
+
+      // Send delete information to DB(use the item.id?).
     }
-    // Send delete information to DB(use the item.id?).
+  };
+
+  const sendTask = (items: ListData[]) => {
+    // Send request information to DB
   };
 
   return (
@@ -62,7 +77,7 @@ const ListItem: React.FC<ListItemProps> = (
                   className="focus:ring-0 w-6 h-6 mx-3"
                   type="checkbox"
                   name={item.id}
-                  checked={checkedItems[item.id] || false}
+                  checked={item.checked}
                   onChange={(event) => handleCheckboxChange(event)}
                 />
                 {JSON.stringify(item.listName.formData.text, null, 2).replace(
@@ -84,16 +99,25 @@ const ListItem: React.FC<ListItemProps> = (
             <p>買い物リストのデータが存在しません。</p>
           )}
         </div>
-        <button className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2">
-          保存
-        </button>
       </div>
 
-      {/* <div className="flex justify-center items-center py-8">
-        <button className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2">
-          保存
-        </button>
-      </div> */}
+      <div className="flex justify-center items-center py-8">
+        {listData !== null && listData !== undefined ? (
+          <button
+            onClick={() => sendTask(listData)}
+            className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2"
+          >
+            保存
+          </button>
+        ) : (
+          <button
+            disabled={true}
+            className="bg-gray-500 text-white rounded px-4 py-2"
+          >
+            保存
+          </button>
+        )}
+      </div>
     </>
   );
 };
