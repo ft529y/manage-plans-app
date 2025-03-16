@@ -55,6 +55,7 @@ export interface Calender {
 export interface ListData {
   id: string;
   listName: { formData: { text: string } };
+  checked: boolean;
 }
 export interface ListItemProps {
   fetchExe: boolean;
