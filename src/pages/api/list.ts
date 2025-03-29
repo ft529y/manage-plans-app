@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { ListData } from '@/common/types';
 import { listDataMock } from '@/mock/listDataMock';
+import { getListData, setListData } from '@/service/datacontainer';
 
 import closeDB from '../utils/closeDB';
 import connectDB from '../utils/connectDB';
@@ -9,7 +10,8 @@ import { ListModel } from '../utils/shemaModels';
 
 const { v4: uuid4 } = require('uuid');
 // From now on, it will be retrieved from the DB.
-const mockData = listDataMock;
+setListData(listDataMock);
+let mockData = getListData();
 
 const ListAPI = async (req: NextApiRequest, res: NextApiResponse) => {
   // await connectDB();
@@ -17,6 +19,7 @@ const ListAPI = async (req: NextApiRequest, res: NextApiResponse) => {
   let listData: ListData = {
     id: '',
     listName: { formData: { text: '' } },
+    checked: false,
   };
 
   const { method } = req;
@@ -32,43 +35,50 @@ const ListAPI = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json(mockData);
   }
 
-  // ↓がmongoDBへのデータ登録コード(現在は非稼働)
-  // 今後、mongoDBへの登録アクティブ状態にする
+  // ユーザーが送信ボタンを押下した際の処理
+  // ↓がmongoDBへのデータ登録コード(現在は非稼働) 今後、mongoDBへの登録アクティブ状態にする
   if (method === 'POST') {
-    try {
-      const { body } = req;
-      const text: string = body?.formData?.text;
-      const uuid: string = uuid4();
-
-      listData = {
-        id: uuid,
-        listName: { formData: { text } },
-      };
-
-      await ListModel.create(listData);
+    // ユーザーが保存ボタンを押下した際の処理
+    if (req.query.save) {
       res.status(200).json({
-        message: `POST request received with data成功!!!: ${JSON.stringify(
-          body
-        )}`,
-        created: true,
+        message: `データの更新に成功しました。`,
       });
-    } catch (err) {
-      return res.status(400).json({
-        message: `POST failed!!!: ${err}}`,
-      });
+      return;
     }
 
-    // const { body } = req;
-    // const text: string = body?.formData?.text;
-    // const uuid: string = uuid4();
-    // res.status(200).json({
-    //   message: `POST request received with data!!!: ${JSON.stringify(body)}`,
-    // });
-    // listData = {
-    //   id: uuid,
-    //   listName: { formData: { text } },
-    // };
-    // mockData.push(listData);
+    if (req.query.send) {
+      try {
+        const { body } = req;
+        const text: string = body?.formData?.text;
+        const uuid: string = uuid4();
+
+        listData = {
+          id: uuid,
+          listName: { formData: { text } },
+          checked: false,
+        };
+
+        mockData.push(listData);
+
+        res.status(200).json({
+          message: `データの生成に成功しました。`,
+          body: mockData,
+        });
+
+        // ↓mongo DBへ登録するコード
+        // await ListModel.create(listData);
+        // res.status(200).json({
+        //   message: `POST request received with data成功!!!: ${JSON.stringify(
+        //     body
+        //   )}`,
+        //   created: true,
+        // });
+      } catch (err) {
+        return res.status(400).json({
+          message: `POST failed!!!: ${err}}`,
+        });
+      }
+    }
   }
 
   // DELETEメソッドを完成させる。

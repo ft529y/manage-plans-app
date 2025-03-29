@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 import { checkbox, ListData, ListItemProps } from '../common/types';
 
@@ -62,8 +62,22 @@ const ListItem: React.FC<ListItemProps> = (
     }
   };
 
-  const sendTask = (items: ListData[]) => {
+  const sendTask = async () => {
     // Send request information to DB
+    try {
+      const url = '/api/list?save=true';
+      const reponse = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: '',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    // items: ListData[]
   };
 
   return (
@@ -104,7 +118,7 @@ const ListItem: React.FC<ListItemProps> = (
       <div className="flex justify-center items-center py-8">
         {listData !== null && listData !== undefined ? (
           <button
-            onClick={() => sendTask(listData)}
+            onClick={() => sendTask()}
             className="bg-blue-900 hover:bg-blue-800 text-white rounded px-4 py-2"
           >
             保存

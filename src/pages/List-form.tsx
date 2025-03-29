@@ -17,7 +17,8 @@ const List = () => {
   const sendListItem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/list', {
+      const url = '/api/list?send=true';
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
