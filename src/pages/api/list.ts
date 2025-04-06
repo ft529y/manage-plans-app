@@ -4,9 +4,9 @@ import { ListData } from '@/common/types';
 import { listDataMock } from '@/mock/listDataMock';
 import { getListData, setListData } from '@/service/datacontainer';
 
+import { ListModel } from '../utils/ schemaModels';
 import closeDB from '../utils/closeDB';
 import connectDB from '../utils/connectDB';
-import { ListModel } from '../utils/shemaModels';
 
 const { v4: uuid4 } = require('uuid');
 // From now on, it will be retrieved from the DB.
