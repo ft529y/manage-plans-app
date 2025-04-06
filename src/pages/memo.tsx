@@ -63,6 +63,15 @@ const Memo = () => {
     router.push(url);
   };
 
+  const removeTask = (removeItem: MemoData) => {
+    if (memoData) {
+      const removeData = memoData.filter((item) => {
+        return removeItem.id !== item.id;
+      });
+      setMemoData(removeData);
+    }
+  };
+
   return (
     <>
       <div className="w-full justify-center flex-col items-center flex">
@@ -104,7 +113,7 @@ const Memo = () => {
                 </button>
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
-                  // onClick={() => removeTask(index, item)}
+                  onClick={() => removeTask(item)}
                 >
                   削除
                 </button>
