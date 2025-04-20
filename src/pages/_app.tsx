@@ -18,6 +18,7 @@ export default function App({
   const isSignInPage = router.pathname === '/auth/signin';
   return (
     <>
+      <title>管理アプリ</title>
       <SessionProvider session={session}>
         <UserProvider>
           {!isSignInPage && <Header />}
